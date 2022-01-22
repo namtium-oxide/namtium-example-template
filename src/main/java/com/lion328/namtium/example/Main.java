@@ -43,7 +43,7 @@ public class Main {
             return;
         }
 
-        getLogger().info("Namtium launcher version " + BuildConstants.VERSION);
+        getLogger().info("Launcher version " + BuildConstants.VERSION);
         getLogger().info("Register language...");
         registerLanguage();
 
