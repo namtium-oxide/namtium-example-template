@@ -42,6 +42,11 @@ sourceSets {
             srcDirs = ['src/main/resources']
         }
     }
+    template {
+        java {
+            srcDirs = ['src/template/java']
+        }
+    }
 }
 
 task generateSources(type: Copy) {
@@ -57,6 +62,21 @@ task generateSources(type: Copy) {
 
 compileJava.dependsOn generateSources
 
-shadowJar {
-    minimize()
+task proguard(type: proguard.gradle.ProGuardTask) {
+    configuration 'proguard.cfg'
+
+    dependsOn shadowJar
+    injars shadowJar
+    outjars "$buildDir/libs/${project.name}-${project.version}-obfuscated.jar"
+    printmapping "$buildDir/proguard.map"
+
+    if (System.getProperty('java.version').startsWith('1.')) {
+        libraryjars "${System.getProperty('java.home')}/lib/rt.jar"
+    } else {
+        new File("${System.getProperty('java.home')}/jmods").listFiles().each {
+            libraryjars it, jarfilter: '!**.jar', filter: '!module-info.class'
+        }
+    }
 }
+
+assemble.dependsOn proguard
