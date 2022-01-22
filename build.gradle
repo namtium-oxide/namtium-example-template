@@ -1,5 +1,12 @@
+buildscript {
+    dependencies {
+        classpath 'com.guardsquare:proguard-gradle:7.1.0'
+    }
+}
+
 plugins {
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 repositories {
@@ -22,25 +29,6 @@ sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
 
 compileJava.options.encoding = 'UTF-8'
-
-jar {
-    from {
-        configurations.runtimeClasspath.collect {
-            it.isDirectory() ? it : zipTree(it);
-        }
-    }
-
-    duplicatesStrategy = DuplicatesStrategy.WARN
-
-    exclude [
-        'META-INF/*.SF',
-        'META-INF/*.DSA',
-        'META-INF/*.RSA',
-        'META-INF/LICENSE',
-        'META-INF/NOTICE',
-        'META-INF/DEPENDENCIES',
-    ]
-}
 
 sourceSets {
     main {
@@ -65,3 +53,9 @@ task generateSources(type: Copy) {
 }
 
 compileJava.dependsOn generateSources
+
+shadowJar {
+    minimize {
+        exclude(dependency('org.apache.logging.log4j:.*:.*'))
+    }
+}
