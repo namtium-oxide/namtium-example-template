@@ -41,3 +41,27 @@ jar {
         'META-INF/DEPENDENCIES',
     ]
 }
+
+sourceSets {
+    main {
+        java {
+            srcDirs = [
+                    'src/main/java',
+                    "$buildDir/generated/java",
+            ]
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+}
+
+task generateSources(type: Copy) {
+    def vars = ['version': project.version]
+    inputs.properties vars
+    from('src/template/java')
+    into "$buildDir/generated/java"
+    expand vars
+}
+
+compileJava.dependsOn generateSources

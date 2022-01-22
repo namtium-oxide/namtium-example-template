@@ -5,6 +5,7 @@ package com.lion328.namtium.example;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.lion328.namtium.example.generated.BuildConstants;
 import com.lion328.namtium.launcher.Language;
 import com.lion328.namtium.launcher.hydra.CrashReportUI;
 import com.lion328.namtium.launcher.hydra.HydraLauncher;
@@ -19,7 +20,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -160,19 +160,7 @@ public class Main {
     }
 
     static {
-        String version = "UNKNOWN";
-
-        try {
-            version = new BufferedReader(
-                    new InputStreamReader(
-                            Main.class.getResourceAsStream("/com/lion328/namtium/example/version")
-                    )
-            ).readLine().trim();
-        } catch (IOException e) {
-            getLogger().catching(e);
-        }
-
-        VERSION = version;
+        VERSION = BuildConstants.VERSION;
 
         fontsName = new String[]{
                 // Put your new fonts' name here
