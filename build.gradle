@@ -1,0 +1,43 @@
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.namtium-oxide:namtium:master-SNAPSHOT'
+    implementation 'org.apache.logging.log4j:log4j-core:2.12.4'
+}
+
+application {
+    mainClass = 'com.lion328.namtium.example.Main'
+}
+
+version = '1.0';
+
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
+
+compileJava.options.encoding = 'UTF-8'
+
+jar {
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it);
+        }
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.WARN
+
+    exclude [
+        'META-INF/*.SF',
+        'META-INF/*.DSA',
+        'META-INF/*.RSA',
+        'META-INF/LICENSE',
+        'META-INF/NOTICE',
+        'META-INF/DEPENDENCIES',
+    ]
+}
