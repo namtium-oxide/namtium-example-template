@@ -58,7 +58,7 @@ public class SwingPlayerSettingsUI implements PlayerSettingsUI {
             panel.setImage(
                     ImageIO.read(getClass().getResourceAsStream("/com/lion328/namtium/example/settings_bg.png")));
         } catch (IOException e) {
-            Main.getLogger().catching(e);
+            Main.getLogger().error("Failed to load settings GUI background", e);
         }
 
         panel.setPreferredSize(new Dimension(400, 150));

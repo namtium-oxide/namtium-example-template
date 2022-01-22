@@ -15,15 +15,15 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.namtium-oxide:namtium:master-SNAPSHOT'
-    implementation 'org.apache.logging.log4j:log4j-core:2.12.4'
+    implementation 'com.github.namtium-oxide:namtium:fa3b3601c7'
+    implementation 'org.slf4j:slf4j-simple:1.7.33'
 }
 
 application {
     mainClass = 'com.lion328.namtium.example.Main'
 }
 
-version = '1.0';
+project.version = '1.0';
 
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
@@ -45,7 +45,10 @@ sourceSets {
 }
 
 task generateSources(type: Copy) {
-    def vars = ['version': project.version]
+    def vars = [
+            'version': project.version,
+            'name': project.name,
+    ]
     inputs.properties vars
     from('src/template/java')
     into "$buildDir/generated/java"
@@ -55,7 +58,5 @@ task generateSources(type: Copy) {
 compileJava.dependsOn generateSources
 
 shadowJar {
-    minimize {
-        exclude(dependency('org.apache.logging.log4j:.*:.*'))
-    }
+    minimize()
 }

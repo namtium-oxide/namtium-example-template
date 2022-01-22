@@ -3,6 +3,7 @@
 
 package com.lion328.namtium.example;
 
+import com.lion328.namtium.example.generated.BuildConstants;
 import com.lion328.namtium.launcher.Language;
 import com.lion328.namtium.launcher.Launcher;
 import com.lion328.namtium.launcher.hydra.HydraLauncher;
@@ -77,7 +78,7 @@ public class SwingLauncherUI implements LauncherUI {
         try {
             panel.setImage(ImageIO.read(this.getClass().getResourceAsStream("/com/lion328/namtium/example/bg.png")));
         } catch (IOException e) {
-            Main.getLogger().catching(e);
+            Main.getLogger().error("Failed to load main GUI background", e);
         }
 
         panel.setLayout(null);
@@ -92,7 +93,7 @@ public class SwingLauncherUI implements LauncherUI {
             frame.setIconImage(
                     ImageIO.read(this.getClass().getResourceAsStream("/com/lion328/namtium/example/favicon.png")));
         } catch (IOException e) {
-            Main.getLogger().catching(e);
+            Main.getLogger().error("Failed to load the application's icon", e);
         }
 
         usernameField = new JTextField();
@@ -186,7 +187,7 @@ public class SwingLauncherUI implements LauncherUI {
         panel.add(registerButton);
         panel.add(settingsButton);
 
-        JLabel versionLabel = new JLabel(Main.VERSION, SwingConstants.RIGHT);
+        JLabel versionLabel = new JLabel(BuildConstants.VERSION, SwingConstants.RIGHT);
         versionLabel.setBounds(600, 475, 190, 20);
         versionLabel.setOpaque(false);
         versionLabel.setForeground(new Color(0, 0, 0, 50));
@@ -202,7 +203,7 @@ public class SwingLauncherUI implements LauncherUI {
                         newsPanel.setBounds(28, 19, 525, 375);
                         panel.add(newsPanel);
                     } catch (IOException e) {
-                        Main.getLogger().catching(e);
+                        Main.getLogger().error("Failed to load news image", e);
                     }
                 }
             });

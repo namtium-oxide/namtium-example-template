@@ -48,7 +48,7 @@ public class SwingCrashReportUI implements CrashReportUI {
         try {
             report = new String(Files.readAllBytes(crashReportFile.toPath()), StandardCharsets.UTF_8);
         } catch (IOException e) {
-            Main.getLogger().catching(e);
+            Main.getLogger().error("Failed to read crash report file", e);
             report = "Can't read crash report file: " + crashReportFile.getAbsolutePath() + "\n" + e.getMessage();
         }
 

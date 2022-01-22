@@ -10,8 +10,8 @@ import com.lion328.namtium.launcher.Language;
 import com.lion328.namtium.launcher.hydra.CrashReportUI;
 import com.lion328.namtium.launcher.hydra.HydraLauncher;
 import com.lion328.namtium.launcher.hydra.PlayerSettingsUI;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -29,7 +29,6 @@ import java.util.Map;
 
 public class Main {
 
-    public static final String VERSION;
     public static final String LANGUAGE_NAMESPACE = "namtium";
     public static final String LANGUAGE_PREFIX = LANGUAGE_NAMESPACE + ".";
 
@@ -39,12 +38,12 @@ public class Main {
 
     public static void main(String[] args) {
         if (args.length >= 1 && args[0].equals("--version")) {
-            System.out.println(VERSION);
+            System.out.println(BuildConstants.VERSION);
 
             return;
         }
 
-        getLogger().info("Namtium launcher version " + VERSION);
+        getLogger().info("Namtium launcher version " + BuildConstants.VERSION);
         getLogger().info("Register language...");
         registerLanguage();
 
@@ -54,12 +53,16 @@ public class Main {
 
         try {
             registerFonts();
+        } catch (Exception e) {
+            getLogger().error("Failed to register fonts", e);
+        }
 
+        try {
             if (!setLookAndFeel("Metal")) {
-                getLogger().info("Failed to set Metal as swing look and feel");
+                getLogger().warn("Metal look and feel is missing");
             }
         } catch (Exception e) {
-            getLogger().catching(e);
+            getLogger().error("Failed to set Metal as swing look and feel", e);
         }
 
         if (fonts.length != 0) {
@@ -87,7 +90,7 @@ public class Main {
 
     public static Logger getLogger() {
         if (logger == null) {
-            logger = LogManager.getLogger("Namtium-Launcher");
+            logger = LoggerFactory.getLogger(BuildConstants.NAME);
         }
 
         return logger;
@@ -160,8 +163,6 @@ public class Main {
     }
 
     static {
-        VERSION = BuildConstants.VERSION;
-
         fontsName = new String[]{
                 // Put your new fonts' name here
         };
