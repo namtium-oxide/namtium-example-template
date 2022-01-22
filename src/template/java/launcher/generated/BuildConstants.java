@@ -1,4 +1,4 @@
-package com.lion328.namtium.example.generated;
+package launcher.generated;
 
 public class BuildConstants {
     public static final String VERSION = "${version}";

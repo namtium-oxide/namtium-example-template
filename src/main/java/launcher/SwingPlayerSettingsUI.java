@@ -1,7 +1,7 @@
 // Copyright (C) 2018-2022 Waritnan Sookbuntherng
 // SPDX-License-Identifier: Apache-2.0
 
-package com.lion328.namtium.example;
+package launcher;
 
 import com.lion328.namtium.launcher.Language;
 import com.lion328.namtium.launcher.hydra.HydraLauncher;
@@ -56,7 +56,7 @@ public class SwingPlayerSettingsUI implements PlayerSettingsUI {
 
         try {
             panel.setImage(
-                    ImageIO.read(getClass().getResourceAsStream("/com/lion328/namtium/example/settings_bg.png")));
+                    ImageIO.read(getClass().getResourceAsStream("/launcher/settings_bg.png")));
         } catch (IOException e) {
             Main.getLogger().error("Failed to load settings GUI background", e);
         }

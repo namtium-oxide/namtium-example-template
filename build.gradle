@@ -20,7 +20,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'com.lion328.namtium.example.Main'
+    mainClass = 'launcher.Main'
 }
 
 project.version = '1.0';

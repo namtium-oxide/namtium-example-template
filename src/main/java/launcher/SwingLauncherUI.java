@@ -1,9 +1,8 @@
 // Copyright (C) 2018-2022 Waritnan Sookbuntherng
 // SPDX-License-Identifier: Apache-2.0
 
-package com.lion328.namtium.example;
+package launcher;
 
-import com.lion328.namtium.example.generated.BuildConstants;
 import com.lion328.namtium.launcher.Language;
 import com.lion328.namtium.launcher.Launcher;
 import com.lion328.namtium.launcher.hydra.HydraLauncher;
@@ -11,6 +10,7 @@ import com.lion328.namtium.launcher.ui.LauncherUI;
 import com.lion328.namtium.util.ImagePanel;
 import com.lion328.namtium.util.URLUtil;
 import com.lion328.namtium.util.UnitUtil;
+import launcher.generated.BuildConstants;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -76,7 +76,7 @@ public class SwingLauncherUI implements LauncherUI {
         final ImagePanel panel = new ImagePanel();
 
         try {
-            panel.setImage(ImageIO.read(this.getClass().getResourceAsStream("/com/lion328/namtium/example/bg.png")));
+            panel.setImage(ImageIO.read(this.getClass().getResourceAsStream("/launcher/bg.png")));
         } catch (IOException e) {
             Main.getLogger().error("Failed to load main GUI background", e);
         }
@@ -91,7 +91,7 @@ public class SwingLauncherUI implements LauncherUI {
 
         try {
             frame.setIconImage(
-                    ImageIO.read(this.getClass().getResourceAsStream("/com/lion328/namtium/example/favicon.png")));
+                    ImageIO.read(this.getClass().getResourceAsStream("/launcher/favicon.png")));
         } catch (IOException e) {
             Main.getLogger().error("Failed to load the application's icon", e);
         }

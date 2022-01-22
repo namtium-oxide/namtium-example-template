@@ -1,15 +1,15 @@
 // Copyright (C) 2018-2022 Waritnan Sookbuntherng
 // SPDX-License-Identifier: Apache-2.0
 
-package com.lion328.namtium.example;
+package launcher;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.lion328.namtium.example.generated.BuildConstants;
 import com.lion328.namtium.launcher.Language;
 import com.lion328.namtium.launcher.hydra.CrashReportUI;
 import com.lion328.namtium.launcher.hydra.HydraLauncher;
 import com.lion328.namtium.launcher.hydra.PlayerSettingsUI;
+import launcher.generated.BuildConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -152,7 +152,7 @@ public class Main {
 
     private static void registerLanguage() {
         Reader reader = new InputStreamReader(
-                Language.class.getResourceAsStream("/com/lion328/namtium/example/lang.json"),
+                Language.class.getResourceAsStream("/launcher/lang.json"),
                 StandardCharsets.UTF_8
         );
         Map<String, String> table = new Gson().fromJson(reader, new TypeToken<Map<String, String>>() {}.getType());
