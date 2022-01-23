@@ -6,7 +6,6 @@ buildscript {
 
 plugins {
     id 'application'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 repositories {
@@ -62,11 +61,34 @@ task generateSources(type: Copy) {
 
 compileJava.dependsOn generateSources
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'launcher.Main'
+    }
+
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it);
+        }
+    }
+
+    exclude [
+            'META-INF/*.SF',
+            'META-INF/*.DSA',
+            'META-INF/*.RSA',
+            'META-INF/maven/**',
+            'META-INF/LICENSE',
+            'META-INF/NOTICE',
+            'META-INF/DEPENDENCIES',
+    ]
+}
+
 task proguard(type: proguard.gradle.ProGuardTask) {
+    dependsOn jar
+
     configuration 'proguard.cfg'
 
-    dependsOn shadowJar
-    injars shadowJar
+    injars jar
     outjars "$buildDir/libs/${project.name}-${project.version}-obfuscated.jar"
     printmapping "$buildDir/proguard.map"
 
