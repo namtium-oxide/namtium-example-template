@@ -68,7 +68,7 @@ public class Main {
         if (fonts.length != 0) {
             setGlobalSwingFont(new FontUIResource(fonts[0].deriveFont(Font.PLAIN, 14)));
         } else {
-            setGlobalSwingFont(new FontUIResource(new Font(Font.SANS_SERIF, Font.PLAIN, 14)));
+            setGlobalSwingFont(new FontUIResource(new Font("Tahoma", Font.PLAIN, 14)));
         }
 
         getLogger().info("Changing ProgressBar color...");
@@ -110,7 +110,7 @@ public class Main {
 
             getLogger().info("Registering font " + fontName);
 
-            fontName = "resources/fonts/" + fontName + ".ttf";
+            fontName = "fonts/" + fontName + ".ttf";
             font = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream(fontName));
 
             fonts[i] = font;
@@ -127,7 +127,7 @@ public class Main {
             Object key = keys.nextElement();
             Object value = UIManager.get(key);
 
-            if (value instanceof javax.swing.plaf.FontUIResource) {
+            if (value instanceof FontUIResource) {
                 UIManager.put(key, font);
             }
         }
