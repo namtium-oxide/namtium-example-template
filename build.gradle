@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.namtium-oxide:namtium:fa3b3601c7'
+    implementation 'com.github.namtium-oxide:namtium:fda49faec3'
     implementation 'org.slf4j:slf4j-simple:1.7.33'
 }
 

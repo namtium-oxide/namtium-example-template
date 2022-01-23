@@ -51,7 +51,7 @@ public class Configuration implements HydraConfiguration {
 
     @Override
     public UUID getApplicationUUID() {
-        return UUID.fromString("769206ae-9c87-4aa7-ad47-7e939679ba37");
+        return UUID.fromString("change this");
     }
 
     @Override
