@@ -83,13 +83,15 @@ jar {
     ]
 }
 
+def obfuscatedJar = "$buildDir/libs/${project.name}-${project.version}-obfuscated.jar"
+
 task proguard(type: proguard.gradle.ProGuardTask) {
     dependsOn jar
 
     configuration 'proguard.cfg'
 
     injars jar
-    outjars "$buildDir/libs/${project.name}-${project.version}-obfuscated.jar"
+    outjars obfuscatedJar
     printmapping "$buildDir/proguard.map"
 
     if (System.getProperty('java.version').startsWith('1.')) {
@@ -102,3 +104,8 @@ task proguard(type: proguard.gradle.ProGuardTask) {
 }
 
 assemble.dependsOn proguard
+
+task runObfuscated(type: JavaExec) {
+    dependsOn proguard
+    classpath obfuscatedJar
+}
