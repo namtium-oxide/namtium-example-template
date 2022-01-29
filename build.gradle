@@ -66,8 +66,10 @@ task generateLicense(type: com.github.vlsi.gradle.license.GatherLicenseTask) {
     configurations.add(project.configurations.runtimeClasspath)
 }
 
-jar {
-    dependsOn generateLicense
+task fatJar(type: Jar) {
+    with jar
+
+    archiveClassifier = 'all'
 
     manifest {
         attributes 'Main-Class': application.mainClass
@@ -95,11 +97,9 @@ jar {
 }
 
 task proguard(type: proguard.gradle.ProGuardTask) {
-    dependsOn jar
-
     configuration 'proguard.cfg'
 
-    injars jar
+    injars fatJar
     outjars "$buildDir/libs/${project.name}-${project.version}-obfuscated.jar"
     printmapping "$buildDir/proguard.map"
 
@@ -113,6 +113,10 @@ task proguard(type: proguard.gradle.ProGuardTask) {
 }
 
 assemble.dependsOn proguard
+
+task runFat(type: JavaExec) {
+    classpath fatJar
+}
 
 task runObfuscated(type: JavaExec) {
     dependsOn proguard
