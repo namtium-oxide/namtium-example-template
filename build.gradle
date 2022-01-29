@@ -6,6 +6,7 @@ buildscript {
 
 plugins {
     id 'application'
+    id 'com.github.vlsi.license-gather' version '1.77'
 }
 
 repositories {
@@ -61,15 +62,25 @@ task generateSources(type: Copy) {
 
 compileJava.dependsOn generateSources
 
+task generateLicense(type: com.github.vlsi.gradle.license.GatherLicenseTask) {
+    configurations.add(project.configurations.runtimeClasspath)
+}
+
 jar {
+    dependsOn generateLicense
+
     manifest {
-        attributes 'Main-Class': 'launcher.Main'
+        attributes 'Main-Class': application.mainClass
     }
 
     from {
         configurations.runtimeClasspath.collect {
             it.isDirectory() ? it : zipTree(it);
         }
+    }
+
+    from(generateLicense) {
+        into('META-INF/licenses')
     }
 
     exclude [
@@ -83,15 +94,13 @@ jar {
     ]
 }
 
-def obfuscatedJar = "$buildDir/libs/${project.name}-${project.version}-obfuscated.jar"
-
 task proguard(type: proguard.gradle.ProGuardTask) {
     dependsOn jar
 
     configuration 'proguard.cfg'
 
     injars jar
-    outjars obfuscatedJar
+    outjars "$buildDir/libs/${project.name}-${project.version}-obfuscated.jar"
     printmapping "$buildDir/proguard.map"
 
     if (System.getProperty('java.version').startsWith('1.')) {
@@ -107,5 +116,5 @@ assemble.dependsOn proguard
 
 task runObfuscated(type: JavaExec) {
     dependsOn proguard
-    classpath obfuscatedJar
+    classpath proguard.outJarFiles[0]
 }
